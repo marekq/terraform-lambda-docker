@@ -6,6 +6,6 @@ Use this solution to deploy a basic serverless stack using Terraform. The stack 
 Installation
 ------------
 
-Edit 'variables.tf' to set the AWS region and property names. Next, run 'terraform plan' and 'terraform apply' in the root directory to deploy. 
+Edit 'variables.tf' to set the AWS region and property names. Next, run 'terraform init' to download all dependancies. After that, run 'terraform plan' and 'terraform apply' in the root directory to deploy the stack to AWS. 
 
-If you want to update the Docker image later on, run 'bash push_ecr.sh' to push the image to ECR. 
+If you want to update the code in the 'lambda' folder later on, run 'bash push_ecr.sh' to push the updated Docker image to ECR. This will also trigger an update of the Lambda function, which takes ~30 seconds.

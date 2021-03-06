@@ -25,8 +25,8 @@ module "lambda_function_from_container_image" {
   image_uri = local.ecr_image
   function_name = var.lambda_function_name
   package_type = "Image"
-  memory_size = 256
-  timeout = 5
+  memory_size = 128
+  timeout = 3
 
   // do not create a package or publish, this is handled through the push_ecr script
   create_package = false
@@ -65,7 +65,7 @@ module "api_gateway" {
   // create a GET route to the Lambda
   integrations = {
   
-		"ANY /" = {
+    "ANY /" = {
       lambda_arn = module.lambda_function_from_container_image.this_lambda_function_invoke_arn
     }
   }

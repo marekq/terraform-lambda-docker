@@ -1,3 +1,6 @@
+# refresh terraform output
+terraform refresh
+
 # get variables from terraform
 ecr_repo=$(terraform output ecr_repo | tr -d '"')
 lambda_function=$(terraform output this_lambda_function_name | tr -d '"')
@@ -21,8 +24,8 @@ docker push $ecr_repo:latest
 echo 'Updating Lambda code'
 cmd=$(aws lambda update-function-code --function-name $lambda_function --image-uri $ecr_repo:latest)
 
-# wait until function is deployed by checking Lambda api
-while [[ '1' -ne '0' ]]
+# wait until the function is deployed by checking Lambda api
+while [[ 'true' ]]
 do
     var=$(aws lambda get-function --function-name $lambda_function | grep -o InProgress)
     echo 'Lambda Update Status:' $var
@@ -30,16 +33,17 @@ do
     if [[ $var == "" ]]
     then
 
-        echo 'done updating!'
-        
-        echo $apigateway_url
+        # completed, return API Gateway URL
+        echo 'done updating '$apigateway_url
 
+        # perform a get request on the API
         curl $apigateway_url
 
         exit
         
     fi
 
+    # wait 3 seconds between retries
     sleep 3
 
 done

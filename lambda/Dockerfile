@@ -1,9 +1,11 @@
-FROM public.ecr.aws/lambda/python:latest
+FROM python:3.9-slim-buster
 
-# install python requirements 
-COPY requirements.txt ./
-RUN pip3 install --no-cache-dir -r requirements.txt
+COPY requirements.txt .
+RUN python3 -m pip install -r requirements.txt
 
-# copy lambda code
-COPY app.py ./
-CMD ["app.lambda_handler"]
+RUN mkdir -p /function
+COPY app.py /function
+
+WORKDIR /function
+ENTRYPOINT [ "/usr/local/bin/python", "-m", "awslambdaric" ]
+CMD [ "app.lambda_handler" ]
