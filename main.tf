@@ -33,8 +33,9 @@ module "lambda_function_from_container_image" {
   publish = false
   create_current_version_allowed_triggers = false
 
-  // enable XRay tracing
+  // enable X-Ray tracing
   attach_tracing_policy = true
+  tracing_mode = "Active"
 
   allowed_triggers = {
     AllowExecutionFromAPIGateway = {
