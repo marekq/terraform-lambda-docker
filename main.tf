@@ -25,7 +25,7 @@ module "lambda_function_from_container_image" {
   image_uri = local.ecr_image
   function_name = var.lambda_function_name
   package_type = "Image"
-  memory_size = 128
+  memory_size = 256
   timeout = 3
 
   // do not create a package or publish, this is handled through the push_ecr script
