@@ -66,7 +66,7 @@ module "api_gateway" {
   // create a GET route to the Lambda
   integrations = {
   
-    "ANY /" = {
+    "GET /" = {
       lambda_arn = module.lambda_function_from_container_image.this_lambda_function_invoke_arn
     }
   }

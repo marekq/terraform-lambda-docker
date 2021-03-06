@@ -1,4 +1,4 @@
-import json, os
+import json
 from aws_lambda_powertools import Logger, Tracer
 
 # start logger and tracer of function
